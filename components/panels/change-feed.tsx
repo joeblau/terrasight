@@ -22,10 +22,10 @@ const SOURCE_LABELS: Record<DataSource, string> = {
 }
 
 const SEVERITY_COLORS: Record<string, string> = {
-  critical: "text-[#FF453A]",
-  high: "text-[#FF6B35]",
-  moderate: "text-[#FFD60A]",
-  low: "text-[#30D158]",
+  critical: "text-ops-danger",
+  high: "text-ops-alert",
+  moderate: "text-ops-warning",
+  low: "text-ops-success",
 }
 
 export default function ChangeFeed() {

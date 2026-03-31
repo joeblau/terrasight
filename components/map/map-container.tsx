@@ -178,8 +178,7 @@ export default function MapContainer() {
   return (
     <div
       ref={mapDiv}
-      className="absolute inset-0"
-      style={{ background: "#0B1426" }}
+      className="absolute inset-0 bg-background"
     />
   )
 }

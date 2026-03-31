@@ -50,7 +50,7 @@ export default function CountyBrief() {
   // Compute overall status
   const hasIssues = aboveFlood.length > 0 || alerts.length > 0 || (totalShelterCap > 0 && totalShelterOcc / totalShelterCap > 0.8)
   const statusLabel = hasIssues ? "Active Incidents" : "Normal"
-  const statusDotColor = hasIssues ? "#FF6B35" : "#30D158"
+  const statusDotColor = hasIssues ? "var(--ops-alert)" : "var(--ops-success)"
 
   return (
     <div className="space-y-2 p-3">
@@ -139,7 +139,7 @@ export default function CountyBrief() {
       </BriefCard>
 
       {/* Experimental Score */}
-      <div className="rounded-lg border border-white/5 bg-[#2A3441]/60 px-3 py-2 text-xs text-muted-foreground">
+      <div className="rounded-lg border border-white/5 bg-ops-card px-3 py-2 text-xs text-muted-foreground">
         Composite risk indicators shown above are experimental and uncalibrated.
         Use source data for operational decisions.
       </div>
@@ -214,26 +214,26 @@ function RegionalOverview() {
           <button
             key={county.fips}
             onClick={() => selectCounty(county.fips)}
-            className="w-full rounded-lg border border-white/5 bg-[#2A3441]/60 px-3 py-2 text-left backdrop-blur-sm transition-colors hover:border-[#00D9FF]/30"
+            className="w-full rounded-lg border border-white/5 bg-ops-card px-3 py-2 text-left backdrop-blur-sm transition-colors hover:border-ops-data/30"
           >
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 {county.hasIssues && (
                   <span
                     className="h-2 w-2 shrink-0 rounded-full"
-                    style={{ backgroundColor: "#FF6B35" }}
+                    style={{ backgroundColor: "var(--ops-alert)" }}
                   />
                 )}
                 <span className="text-sm font-medium">{county.name}</span>
               </div>
               <div className="flex gap-2 text-xs">
                 {county.aboveFloodCount > 0 && (
-                  <span className="font-mono text-[#FF6B35]">
+                  <span className="font-mono text-ops-alert">
                     {county.aboveFloodCount} gauge{county.aboveFloodCount !== 1 ? "s" : ""}
                   </span>
                 )}
                 {county.alertCount > 0 && (
-                  <span className="font-mono text-[#FFD60A]">
+                  <span className="font-mono text-ops-warning">
                     {county.alertCount} alert{county.alertCount !== 1 ? "s" : ""}
                   </span>
                 )}
@@ -257,14 +257,14 @@ function BriefCard({
 }) {
   const borderColor =
     severity === "critical"
-      ? "border-[#FF453A]/40"
+      ? "border-ops-danger/40"
       : severity === "high"
-        ? "border-[#FF6B35]/40"
+        ? "border-ops-alert/40"
         : "border-white/5"
 
   return (
     <div
-      className={`rounded-lg border bg-[#2A3441]/60 p-3 backdrop-blur-sm ${borderColor}`}
+      className={`rounded-lg border bg-ops-card p-3 backdrop-blur-sm ${borderColor}`}
     >
       <h3 className="mb-1 font-heading text-xs font-semibold uppercase tracking-wider text-muted-foreground">
         {title}

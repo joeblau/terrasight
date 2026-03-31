@@ -1,10 +1,18 @@
 "use client"
 
 import { useState } from "react"
+import { ArrowUp, Square } from "lucide-react"
 import { useMapStore } from "@/store/map-store"
 import { parseDeterministic } from "@/lib/ai/query-parser"
 import { generateCountyBriefing, generateRankingBriefing } from "@/lib/ai/briefing-generator"
 import { computeCountyRisk, computeAllCountyRisks } from "@/lib/scoring/risk"
+import {
+  PromptInput,
+  PromptInputTextarea,
+  PromptInputActions,
+  PromptInputAction,
+} from "@/components/prompt-kit/prompt-input"
+import { Button } from "@/components/ui/button"
 
 export default function QueryBar() {
   const [input, setInput] = useState("")
@@ -27,8 +35,7 @@ export default function QueryBar() {
     }
   }
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+  const handleSubmit = async () => {
     if (!input.trim() || queryLoading) return
 
     setQueryLoading(true)
@@ -36,7 +43,6 @@ export default function QueryBar() {
     setAnswer(null)
 
     try {
-      // Try deterministic parse first
       const parsed = parseDeterministic(input)
 
       if (parsed) {
@@ -73,7 +79,6 @@ export default function QueryBar() {
             break
         }
       } else {
-        // Freeform: send to Claude API
         const data = getDataSources()
         const context = buildContext(data)
 
@@ -95,6 +100,7 @@ export default function QueryBar() {
       setError(err instanceof Error ? err.message : "Query failed. Try again.")
     } finally {
       setQueryLoading(false)
+      setInput("")
     }
   }
 
@@ -102,18 +108,18 @@ export default function QueryBar() {
     <>
       {/* Answer/error card */}
       {(answer || error) && (
-        <div className="absolute bottom-20 left-1/2 z-10 w-full max-w-lg -translate-x-1/2">
+        <div className="absolute bottom-24 left-1/2 z-10 w-full max-w-xl -translate-x-1/2 px-4">
           <div
-            className={`rounded-lg border p-3 backdrop-blur-sm ${
+            className={`rounded-2xl border p-3 backdrop-blur-sm ${
               error
-                ? "border-[#FF453A]/30 bg-[#0B1426]/90"
-                : "border-[#00D9FF]/20 bg-[#0B1426]/90"
+                ? "border-ops-danger/30 bg-ops-surface"
+                : "border-ops-data/20 bg-ops-surface"
             }`}
           >
             <div className="flex items-start justify-between gap-2">
               <p className="whitespace-pre-line text-sm leading-relaxed">
                 {error ? (
-                  <span className="text-[#FF453A]">{error}</span>
+                  <span className="text-ops-danger">{error}</span>
                 ) : (
                   answer
                 )}
@@ -132,37 +138,42 @@ export default function QueryBar() {
         </div>
       )}
 
-      {/* Query input */}
-      <form
-        onSubmit={handleSubmit}
-        className="absolute bottom-6 left-1/2 z-10 flex w-full max-w-lg -translate-x-1/2 items-center gap-2 rounded-full border border-white/10 bg-[#0B1426]/80 px-4 py-2.5 backdrop-blur-md"
-      >
-        <svg
-          className="h-4 w-4 shrink-0 text-muted-foreground"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          strokeWidth={2}
-        >
-          <circle cx="11" cy="11" r="8" />
-          <path d="m21 21-4.35-4.35" />
-        </svg>
-        <input
-          type="text"
+      {/* Prompt-kit input */}
+      <div className="absolute bottom-4 left-1/2 z-10 w-full max-w-lg -translate-x-1/2 px-4">
+        <PromptInput
           value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder="Ask about any county..."
-          className="flex-1 bg-transparent text-sm text-foreground placeholder:text-muted-foreground focus:outline-none"
-          disabled={queryLoading}
-        />
-        <button
-          type="submit"
-          disabled={!input.trim() || queryLoading}
-          className="rounded-full bg-[#FF6B35] px-4 py-1 font-heading text-xs font-semibold uppercase tracking-wider text-[#0B1426] transition-colors hover:brightness-110 disabled:opacity-40"
+          onValueChange={setInput}
+          isLoading={queryLoading}
+          onSubmit={handleSubmit}
+          maxHeight={120}
+          className="!border-ops-border !bg-ops-surface !shadow-lg backdrop-blur-md"
         >
-          {queryLoading ? "..." : "Ask"}
-        </button>
-      </form>
+          <PromptInputTextarea
+            placeholder="Ask about any county..."
+            className="!bg-transparent text-sm text-white placeholder:text-white/40"
+          />
+          <PromptInputActions className="justify-end px-2 pb-1">
+            <PromptInputAction tooltip={queryLoading ? "Stop" : "Send"}>
+              <Button
+                size="sm"
+                className={`h-8 w-8 rounded-full p-0 ${
+                  queryLoading
+                    ? "bg-ops-danger hover:bg-ops-danger/80"
+                    : "bg-ops-alert text-background hover:bg-ops-alert/80"
+                }`}
+                onClick={queryLoading ? () => setQueryLoading(false) : handleSubmit}
+                disabled={!input.trim() && !queryLoading}
+              >
+                {queryLoading ? (
+                  <Square className="h-3.5 w-3.5 fill-current" />
+                ) : (
+                  <ArrowUp className="h-4 w-4" />
+                )}
+              </Button>
+            </PromptInputAction>
+          </PromptInputActions>
+        </PromptInput>
+      </div>
     </>
   )
 }

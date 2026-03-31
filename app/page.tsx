@@ -34,7 +34,7 @@ export default function Page() {
   const [rightOpen, setRightOpen] = useState(true)
 
   return (
-    <div className="relative h-svh w-full overflow-hidden bg-[#0B1426]">
+    <div className="relative h-svh w-full overflow-hidden bg-background">
       {/* Map fills entire viewport */}
       <MapContainer />
       <DataLoader />

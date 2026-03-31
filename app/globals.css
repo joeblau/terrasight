@@ -71,6 +71,16 @@
     --sidebar-accent-foreground: oklch(1 0 0);
     --sidebar-border: oklch(1 0 0 / 10%);
     --sidebar-ring: oklch(0.556 0 0);
+
+    /* Brand: tactical ops colors */
+    --ops-surface: oklch(0.11 0.01 250 / 90%);
+    --ops-card: oklch(0.22 0.01 250 / 60%);
+    --ops-border: oklch(1 0 0 / 10%);
+    --ops-alert: oklch(0.67 0.2 38);      /* #FF6B35 alert orange */
+    --ops-data: oklch(0.82 0.15 200);      /* #00D9FF data cyan */
+    --ops-danger: oklch(0.65 0.24 25);     /* #FF453A danger red */
+    --ops-warning: oklch(0.88 0.17 95);    /* #FFD60A warning yellow */
+    --ops-success: oklch(0.75 0.18 150);   /* #30D158 success green */
 }
 
 @theme inline {
@@ -84,6 +94,14 @@
     --color-sidebar-primary: var(--sidebar-primary);
     --color-sidebar-foreground: var(--sidebar-foreground);
     --color-sidebar: var(--sidebar);
+    --color-ops-surface: var(--ops-surface);
+    --color-ops-card: var(--ops-card);
+    --color-ops-border: var(--ops-border);
+    --color-ops-alert: var(--ops-alert);
+    --color-ops-data: var(--ops-data);
+    --color-ops-danger: var(--ops-danger);
+    --color-ops-warning: var(--ops-warning);
+    --color-ops-success: var(--ops-success);
     --color-chart-5: var(--chart-5);
     --color-chart-4: var(--chart-4);
     --color-chart-3: var(--chart-3);

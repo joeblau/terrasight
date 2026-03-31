@@ -42,16 +42,15 @@ export default function LayerToggle() {
               className="flex w-full items-center gap-2 rounded px-2 py-1.5 text-left text-sm transition-colors hover:bg-white/5"
             >
               <span
-                className="h-2 w-2 rounded-full"
-                style={{
-                  backgroundColor: !isActive
-                    ? "#556677"
+                className={`h-2 w-2 rounded-full ${
+                  !isActive
+                    ? "bg-muted-foreground/50"
                     : isStale
-                      ? "#FFD60A"
+                      ? "bg-ops-warning"
                       : hasData
-                        ? "#30D158"
-                        : "#FF453A",
-                }}
+                        ? "bg-ops-success"
+                        : "bg-ops-danger"
+                }`}
               />
               <span
                 className={

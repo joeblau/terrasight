@@ -53,30 +53,28 @@ export default function CountyBrief() {
   const statusDotColor = hasIssues ? "#FF6B35" : "#30D158"
 
   return (
-    <div className="absolute right-4 top-4 z-10 w-[280px] space-y-2">
+    <div className="space-y-2 p-3">
       {/* Header */}
-      <div className="rounded-lg border border-white/10 bg-[#0B1426]/90 p-3 backdrop-blur-sm">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            {hasIssues && (
-              <span
-                className="h-2.5 w-2.5 shrink-0 rounded-full"
-                style={{ backgroundColor: statusDotColor }}
-              />
-            )}
-            <h2 className="font-heading text-lg font-semibold uppercase tracking-wide">
-              {countyName}
-            </h2>
-          </div>
-          <button
-            onClick={() => useMapStore.getState().selectCounty(null)}
-            className="text-xs text-muted-foreground hover:text-foreground"
-          >
-            Regional Overview
-          </button>
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          {hasIssues && (
+            <span
+              className="h-2.5 w-2.5 shrink-0 rounded-full"
+              style={{ backgroundColor: statusDotColor }}
+            />
+          )}
+          <h2 className="font-heading text-lg font-semibold uppercase tracking-wide">
+            {countyName}
+          </h2>
         </div>
-        <p className="mt-1 text-xs font-medium" style={{ color: statusDotColor }}>{statusLabel}</p>
+        <button
+          onClick={() => useMapStore.getState().selectCounty(null)}
+          className="text-xs text-muted-foreground hover:text-foreground"
+        >
+          Regional Overview
+        </button>
       </div>
+      <p className="text-xs font-medium" style={{ color: statusDotColor }}>{statusLabel}</p>
 
       {/* Gauge Brief */}
       <BriefCard
@@ -202,8 +200,8 @@ function RegionalOverview() {
   const counties = useCountyStatuses(dataCache)
 
   return (
-    <div className="absolute right-4 top-4 z-10 w-[280px] space-y-2">
-      <div className="rounded-lg border border-white/10 bg-[#0B1426]/90 p-3 backdrop-blur-sm">
+    <div className="space-y-2 p-3">
+      <div>
         <h2 className="font-heading text-sm font-semibold uppercase tracking-wider">
           Regional Overview
         </h2>

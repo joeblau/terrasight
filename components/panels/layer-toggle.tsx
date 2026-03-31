@@ -16,7 +16,7 @@ export default function LayerToggle() {
   const { activeLayers, toggleLayer, dataCache } = useMapStore()
 
   return (
-    <div className="absolute left-4 top-4 z-10 w-[200px] rounded-lg border border-white/10 bg-[#0B1426]/90 p-3 backdrop-blur-sm">
+    <div className="p-3">
       <h3 className="mb-2 font-heading text-xs font-semibold uppercase tracking-wider text-muted-foreground">
         Layers
       </h3>

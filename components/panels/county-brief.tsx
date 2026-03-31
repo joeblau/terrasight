@@ -58,10 +58,12 @@ export default function CountyBrief() {
       <div className="rounded-lg border border-white/10 bg-[#0B1426]/90 p-3 backdrop-blur-sm">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <span
-              className="h-2.5 w-2.5 shrink-0 rounded-full"
-              style={{ backgroundColor: statusDotColor }}
-            />
+            {hasIssues && (
+              <span
+                className="h-2.5 w-2.5 shrink-0 rounded-full"
+                style={{ backgroundColor: statusDotColor }}
+              />
+            )}
             <h2 className="font-heading text-lg font-semibold uppercase tracking-wide">
               {countyName}
             </h2>
@@ -147,22 +149,57 @@ export default function CountyBrief() {
   )
 }
 
-function RegionalOverview() {
-  const { dataCache, selectCounty } = useMapStore()
+interface CountyStatus {
+  fips: string
+  name: string
+  hasIssues: boolean
+  gaugeCount: number
+  aboveFloodCount: number
+  alertCount: number
+  shelterPressure: number
+}
 
-  const rankings = useMemo(() => {
-    const get = (key: "usgs" | "nws" | "fema" | "census") => {
-      const entry = dataCache.get(key)
-      if (!entry) return undefined
-      return entry.result.status === "ok" ? entry.result.data : undefined
-    }
-    return computeAllCountyRisks({
-      gauges: get("usgs"),
-      alerts: get("nws"),
-      shelters: get("fema"),
-      demographics: get("census"),
+function useCountyStatuses(dataCache: ReturnType<typeof useMapStore.getState>["dataCache"]): CountyStatus[] {
+  return useMemo(() => {
+    const allGauges = getAllFeatures(dataCache, "usgs")
+    const allAlerts = getAllFeatures(dataCache, "nws")
+    const allShelters = getAllFeatures(dataCache, "fema")
+
+    return Object.entries(COUNTY_FIPS).map(([fips, name]) => {
+      const gauges = filterByCountyName(allGauges, name, fips)
+      const aboveFlood = gauges.filter(
+        (g) => g.properties.severity === "high" || g.properties.severity === "critical"
+      )
+      const alerts = allAlerts.filter(
+        (f) => ((f.properties.areaDesc as string) ?? "").toLowerCase().includes(name.toLowerCase())
+      )
+      const shelters = filterByCountyName(allShelters, name, fips)
+      const totalCap = shelters.reduce((s, f) => s + (Number(f.properties.capacity) || 0), 0)
+      const totalOcc = shelters.reduce((s, f) => s + (Number(f.properties.occupancy) || 0), 0)
+      const shelterPressure = totalCap > 0 ? totalOcc / totalCap : 0
+
+      const hasIssues = aboveFlood.length > 0 || alerts.length > 0 || shelterPressure > 0.8
+
+      return {
+        fips,
+        name,
+        hasIssues,
+        gaugeCount: gauges.length,
+        aboveFloodCount: aboveFlood.length,
+        alertCount: alerts.length,
+        shelterPressure,
+      }
+    }).sort((a, b) => {
+      // Sort: issues first, then by activity count
+      if (a.hasIssues !== b.hasIssues) return a.hasIssues ? -1 : 1
+      return (b.aboveFloodCount + b.alertCount) - (a.aboveFloodCount + a.alertCount)
     })
   }, [dataCache])
+}
+
+function RegionalOverview() {
+  const { dataCache, selectCounty } = useMapStore()
+  const counties = useCountyStatuses(dataCache)
 
   return (
     <div className="absolute right-4 top-4 z-10 w-[280px] space-y-2">
@@ -175,32 +212,32 @@ function RegionalOverview() {
         </p>
       </div>
       <div className="max-h-[60vh] space-y-1 overflow-y-auto">
-        {rankings.map((county) => (
+        {counties.map((county) => (
           <button
             key={county.fips}
             onClick={() => selectCounty(county.fips)}
             className="w-full rounded-lg border border-white/5 bg-[#2A3441]/60 px-3 py-2 text-left backdrop-blur-sm transition-colors hover:border-[#00D9FF]/30"
           >
             <div className="flex items-center justify-between">
-              <span className="text-sm font-medium">{county.name}</span>
+              <div className="flex items-center gap-2">
+                {county.hasIssues && (
+                  <span
+                    className="h-2 w-2 shrink-0 rounded-full"
+                    style={{ backgroundColor: "#FF6B35" }}
+                  />
+                )}
+                <span className="text-sm font-medium">{county.name}</span>
+              </div>
               <div className="flex gap-2 text-xs">
-                {county.components.map((c) =>
-                  c.value > 0.5 ? (
-                    <span
-                      key={c.source}
-                      className="font-mono"
-                      style={{
-                        color:
-                          c.value > 0.75
-                            ? "#FF453A"
-                            : c.value > 0.5
-                              ? "#FF6B35"
-                              : "#FFD60A",
-                      }}
-                    >
-                      {c.raw}
-                    </span>
-                  ) : null
+                {county.aboveFloodCount > 0 && (
+                  <span className="font-mono text-[#FF6B35]">
+                    {county.aboveFloodCount} gauge{county.aboveFloodCount !== 1 ? "s" : ""}
+                  </span>
+                )}
+                {county.alertCount > 0 && (
+                  <span className="font-mono text-[#FFD60A]">
+                    {county.alertCount} alert{county.alertCount !== 1 ? "s" : ""}
+                  </span>
                 )}
               </div>
             </div>

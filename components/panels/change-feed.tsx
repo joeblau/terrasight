@@ -93,7 +93,7 @@ export default function ChangeFeed() {
   if (events.length === 0) return null
 
   return (
-    <div className="absolute bottom-20 left-4 z-10 w-[280px] rounded-lg border border-white/10 bg-[#0B1426]/90 p-3 backdrop-blur-sm">
+    <div className="p-3">
       <h3 className="mb-2 font-heading text-xs font-semibold uppercase tracking-wider text-muted-foreground">
         Activity Feed
       </h3>

@@ -58,9 +58,9 @@ export default function Page() {
             </button>
           </div>
           <div className="h-px bg-sidebar-border" />
-          <div className="flex-1 overflow-y-auto">
-            <LayerToggle />
-            <div className="h-px bg-sidebar-border" />
+          <LayerToggle />
+          <div className="h-px bg-sidebar-border" />
+          <div className="flex min-h-0 flex-1 flex-col">
             <ChangeFeed />
           </div>
         </div>

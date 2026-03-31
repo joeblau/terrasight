@@ -93,11 +93,11 @@ export default function ChangeFeed() {
   if (events.length === 0) return null
 
   return (
-    <div className="p-3">
+    <div className="flex min-h-0 flex-1 flex-col p-3">
       <h3 className="mb-2 font-heading text-xs font-semibold uppercase tracking-wider text-muted-foreground">
         Activity Feed
       </h3>
-      <div className="max-h-[200px] space-y-1.5 overflow-y-auto">
+      <div className="flex-1 space-y-1.5 overflow-y-auto">
         {events.map((event) => (
           <div key={event.id} className="text-xs leading-relaxed">
             <span

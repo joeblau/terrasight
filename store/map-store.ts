@@ -21,7 +21,7 @@ interface MapState {
   setQueryLoading: (loading: boolean) => void
 }
 
-const DEFAULT_LAYERS: DataSource[] = ["usgs", "fema", "nws", "census", "nhc", "radar"]
+const DEFAULT_LAYERS: DataSource[] = ["usgs", "fema", "nws", "census", "nhc", "radar", "fema-declarations", "nwps", "flood-zones"]
 
 export const useMapStore = create<MapState>((set) => ({
   selectedCounty: null,

@@ -36,6 +36,9 @@ export type DataSource =
   | "census"
   | "nhc"
   | "radar"
+  | "fema-declarations"
+  | "nwps"
+  | "flood-zones"
 
 export interface DataAdapter<T = GeoFeatureCollection> {
   source: DataSource

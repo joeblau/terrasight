@@ -6,6 +6,7 @@ import ArcGISMap from "@arcgis/core/Map"
 import GeoJSONLayer from "@arcgis/core/layers/GeoJSONLayer"
 import GraphicsLayer from "@arcgis/core/layers/GraphicsLayer"
 import WMSLayer from "@arcgis/core/layers/WMSLayer"
+import MapImageLayer from "@arcgis/core/layers/MapImageLayer"
 import Graphic from "@arcgis/core/Graphic"
 import SimpleMarkerSymbol from "@arcgis/core/symbols/SimpleMarkerSymbol"
 import SimpleFillSymbol from "@arcgis/core/symbols/SimpleFillSymbol"
@@ -60,6 +61,7 @@ export default function MapContainer() {
   const viewRef = useRef<MapView | null>(null)
   const layersRef = useRef<Map<DataSource, GraphicsLayer>>(new Map())
   const radarLayerRef = useRef<WMSLayer | null>(null)
+  const floodLayerRef = useRef<MapImageLayer | null>(null)
 
   const dataCache = useMapStore((s) => s.dataCache)
   const activeLayers = useMapStore((s) => s.activeLayers)
@@ -105,8 +107,19 @@ export default function MapContainer() {
     map.add(radarLayer)
     radarLayerRef.current = radarLayer
 
+    // FEMA National Flood Hazard Layer (ArcGIS REST MapServer)
+    const floodLayer = new MapImageLayer({
+      url: "/api/proxy/fema-nfhl",
+      sublayers: [{ id: 28, visible: true }],
+      title: "flood-zones",
+      opacity: 0.3,
+      visible: true,
+    })
+    map.add(floodLayer)
+    floodLayerRef.current = floodLayer
+
     // Create graphics layers for each data source
-    const sources: DataSource[] = ["usgs", "fema", "nws", "census", "nhc"]
+    const sources: DataSource[] = ["usgs", "fema", "nws", "census", "nhc", "fema-declarations", "nwps"]
     for (const source of sources) {
       const layer = new GraphicsLayer({ title: source })
       layersRef.current.set(source, layer)
@@ -157,6 +170,9 @@ export default function MapContainer() {
   useEffect(() => {
     if (radarLayerRef.current) {
       radarLayerRef.current.visible = activeLayers.has("radar")
+    }
+    if (floodLayerRef.current) {
+      floodLayerRef.current.visible = activeLayers.has("flood-zones")
     }
 
     for (const [source, layer] of layersRef.current) {

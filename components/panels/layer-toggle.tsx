@@ -10,6 +10,9 @@ const LAYERS: { source: DataSource; name: string; icon: string }[] = [
   { source: "fema", name: "Shelters", icon: "home" },
   { source: "census", name: "Demographics", icon: "users" },
   { source: "nhc", name: "Hurricane", icon: "cloud-lightning" },
+  { source: "fema-declarations", name: "Declarations", icon: "file-text" },
+  { source: "nwps", name: "Forecasts", icon: "cloud-rain" },
+  { source: "flood-zones", name: "Flood Zones", icon: "waves" },
 ]
 
 export default function LayerToggle() {
@@ -23,13 +26,13 @@ export default function LayerToggle() {
       <div className="space-y-1">
         {LAYERS.map(({ source, name }) => {
           const isActive = activeLayers.has(source)
-          const isRadar = source === "radar"
-          const entry = isRadar ? null : dataCache.get(source)
-          const hasData = isRadar || entry?.result.status === "ok"
+          const isWmsOverlay = source === "radar" || source === "flood-zones"
+          const entry = isWmsOverlay ? null : dataCache.get(source)
+          const hasData = isWmsOverlay || entry?.result.status === "ok"
           const isStale =
-            !isRadar && entry && Date.now() - entry.timestamp > 120_000
+            !isWmsOverlay && entry && Date.now() - entry.timestamp > 120_000
           const featureCount =
-            isRadar
+            isWmsOverlay
               ? 0
               : entry?.result.status === "ok"
                 ? entry.result.data.features.length

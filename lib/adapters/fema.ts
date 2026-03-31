@@ -73,13 +73,19 @@ async function fetchAllShelters(): Promise<AdapterResult<GeoFeatureCollection>> 
       return useMockData("No active shelters nationwide")
     }
 
-    const features = esriFeatures
+    // Filter to FL shelters only; if none, use mock data
+    const flFeatures = esriFeatures
+      .filter((f: EsriFeature) => (f.attributes.state as string)?.toUpperCase() === "FL")
       .map(mapEsriFeature)
       .filter(Boolean) as GeoFeature[]
 
+    if (flFeatures.length === 0) {
+      return useMockData("No active FL shelters")
+    }
+
     return {
       status: "ok",
-      data: { type: "FeatureCollection", features },
+      data: { type: "FeatureCollection", features: flFeatures },
       fetchedAt: new Date(),
     }
   } catch {

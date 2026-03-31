@@ -20,6 +20,8 @@ const SOURCE_LABELS: Record<DataSource, string> = {
   nhc: "STORM",
   radar: "RADAR",
   "fema-declarations": "FEMA",
+  nwps: "FORECAST",
+  "flood-zones": "FLOOD",
 }
 
 const SEVERITY_COLORS: Record<string, string> = {

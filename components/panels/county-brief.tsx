@@ -55,24 +55,16 @@ export default function CountyBrief() {
   return (
     <div className="space-y-2 p-3">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          {hasIssues && (
-            <span
-              className="h-2.5 w-2.5 shrink-0 rounded-full"
-              style={{ backgroundColor: statusDotColor }}
-            />
-          )}
-          <h2 className="font-heading text-lg font-semibold uppercase tracking-wide">
-            {countyName}
-          </h2>
-        </div>
-        <button
-          onClick={() => useMapStore.getState().selectCounty(null)}
-          className="text-xs text-muted-foreground hover:text-foreground"
-        >
-          Regional Overview
-        </button>
+      <div className="flex items-center gap-2">
+        {hasIssues && (
+          <span
+            className="h-2.5 w-2.5 shrink-0 rounded-full"
+            style={{ backgroundColor: statusDotColor }}
+          />
+        )}
+        <h2 className="font-heading text-lg font-semibold uppercase tracking-wide">
+          {countyName}
+        </h2>
       </div>
       <p className="text-xs font-medium" style={{ color: statusDotColor }}>{statusLabel}</p>
 

@@ -2,7 +2,8 @@
 
 import { useState } from "react"
 import dynamic from "next/dynamic"
-import { PanelLeft, PanelRight } from "lucide-react"
+import { ArrowLeft, PanelLeft, PanelRight } from "lucide-react"
+import { useMapStore } from "@/store/map-store"
 
 const MapContainer = dynamic(
   () => import("@/components/map/map-container"),
@@ -32,6 +33,8 @@ const ChangeFeed = dynamic(
 export default function Page() {
   const [leftOpen, setLeftOpen] = useState(true)
   const [rightOpen, setRightOpen] = useState(true)
+  const selectedCounty = useMapStore((s) => s.selectedCounty)
+  const selectCounty = useMapStore((s) => s.selectCounty)
 
   return (
     <div className="relative h-svh w-full overflow-hidden bg-background">
@@ -73,7 +76,17 @@ export default function Page() {
         }`}
       >
         <div className="flex h-full flex-col overflow-hidden rounded-3xl">
-          <div className="flex items-center justify-end p-2">
+          <div className="flex items-center justify-between p-2">
+            {selectedCounty ? (
+              <button
+                onClick={() => selectCounty(null)}
+                className="rounded p-1 text-muted-foreground hover:bg-white/5 hover:text-foreground"
+              >
+                <ArrowLeft className="h-4 w-4" />
+              </button>
+            ) : (
+              <div />
+            )}
             <button
               onClick={() => setRightOpen(false)}
               className="rounded p-1 text-muted-foreground hover:bg-white/5 hover:text-foreground"

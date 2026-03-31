@@ -76,11 +76,11 @@
     --ops-surface: oklch(0.11 0.01 250 / 90%);
     --ops-card: oklch(0.22 0.01 250 / 60%);
     --ops-border: oklch(1 0 0 / 10%);
-    --ops-alert: oklch(0.67 0.2 38);      /* #FF6B35 alert orange */
-    --ops-data: oklch(0.82 0.15 200);      /* #00D9FF data cyan */
-    --ops-danger: oklch(0.65 0.24 25);     /* #FF453A danger red */
-    --ops-warning: oklch(0.88 0.17 95);    /* #FFD60A warning yellow */
-    --ops-success: oklch(0.75 0.18 150);   /* #30D158 success green */
+    --ops-alert: oklch(0.705 0.193 39.2);     /* #FF6B35 */
+    --ops-data: oklch(0.816 0.145 216.5);     /* #00D9FF */
+    --ops-danger: oklch(0.663 0.224 28.3);    /* #FF453A */
+    --ops-warning: oklch(0.885 0.181 94.8);   /* #FFD60A */
+    --ops-success: oklch(0.756 0.208 147.0);  /* #30D158 */
 }
 
 @theme inline {

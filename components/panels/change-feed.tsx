@@ -19,6 +19,7 @@ const SOURCE_LABELS: Record<DataSource, string> = {
   census: "DEMO",
   nhc: "STORM",
   radar: "RADAR",
+  "fema-declarations": "FEMA",
 }
 
 const SEVERITY_COLORS: Record<string, string> = {

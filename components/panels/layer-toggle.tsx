@@ -10,6 +10,7 @@ const LAYERS: { source: DataSource; name: string; icon: string }[] = [
   { source: "fema", name: "Shelters", icon: "home" },
   { source: "census", name: "Demographics", icon: "users" },
   { source: "nhc", name: "Hurricane", icon: "cloud-lightning" },
+  { source: "fema-declarations", name: "Declarations", icon: "file-text" },
 ]
 
 export default function LayerToggle() {

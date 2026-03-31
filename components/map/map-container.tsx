@@ -106,7 +106,7 @@ export default function MapContainer() {
     radarLayerRef.current = radarLayer
 
     // Create graphics layers for each data source
-    const sources: DataSource[] = ["usgs", "fema", "nws", "census", "nhc"]
+    const sources: DataSource[] = ["usgs", "fema", "nws", "census", "nhc", "fema-declarations"]
     for (const source of sources) {
       const layer = new GraphicsLayer({ title: source })
       layersRef.current.set(source, layer)

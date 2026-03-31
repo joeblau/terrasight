@@ -41,11 +41,11 @@ export default function Page() {
 
       {/* Left sidebar: Layers + Activity Feed */}
       <aside
-        className={`absolute left-2 top-2 bottom-2 z-10 w-[260px] rounded-lg border border-sidebar-border bg-sidebar backdrop-blur-sm transition-transform duration-200 ${
+        className={`absolute left-2 top-2 bottom-2 z-10 w-[260px] rounded-3xl border border-sidebar-border bg-sidebar backdrop-blur-sm transition-transform duration-200 ${
           leftOpen ? "translate-x-0" : "-translate-x-[calc(100%+8px)]"
         }`}
       >
-        <div className="flex h-full flex-col overflow-hidden">
+        <div className="flex h-full flex-col overflow-hidden rounded-3xl">
           <div className="flex items-center justify-between p-3">
             <h1 className="font-heading text-sm font-semibold uppercase tracking-wider text-muted-foreground">
               Terrasight
@@ -68,11 +68,11 @@ export default function Page() {
 
       {/* Right sidebar: Regional Overview / County Brief */}
       <aside
-        className={`absolute right-2 top-2 bottom-2 z-10 w-[280px] rounded-lg border border-sidebar-border bg-sidebar backdrop-blur-sm transition-transform duration-200 ${
+        className={`absolute right-2 top-2 bottom-2 z-10 w-[280px] rounded-3xl border border-sidebar-border bg-sidebar backdrop-blur-sm transition-transform duration-200 ${
           rightOpen ? "translate-x-0" : "translate-x-[calc(100%+8px)]"
         }`}
       >
-        <div className="flex h-full flex-col overflow-hidden">
+        <div className="flex h-full flex-col overflow-hidden rounded-3xl">
           <div className="flex items-center justify-end p-2">
             <button
               onClick={() => setRightOpen(false)}
@@ -91,7 +91,7 @@ export default function Page() {
       {!leftOpen && (
         <button
           onClick={() => setLeftOpen(true)}
-          className="absolute left-2 top-2 z-10 rounded-lg border border-sidebar-border bg-sidebar p-2 backdrop-blur-sm hover:bg-white/5"
+          className="absolute left-2 top-2 z-10 rounded-full border border-sidebar-border bg-sidebar p-2 backdrop-blur-sm hover:bg-white/5"
         >
           <PanelLeft className="h-4 w-4" />
         </button>
@@ -99,7 +99,7 @@ export default function Page() {
       {!rightOpen && (
         <button
           onClick={() => setRightOpen(true)}
-          className="absolute right-2 top-2 z-10 rounded-lg border border-sidebar-border bg-sidebar p-2 backdrop-blur-sm hover:bg-white/5"
+          className="absolute right-2 top-2 z-10 rounded-full border border-sidebar-border bg-sidebar p-2 backdrop-blur-sm hover:bg-white/5"
         >
           <PanelRight className="h-4 w-4" />
         </button>

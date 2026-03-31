@@ -1,0 +1,110 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-81.8723, 26.6406] },
+      "properties": {
+        "id": "fema-mock-001",
+        "source": "fema",
+        "name": "Hertz Arena Mega Shelter",
+        "severity": "high",
+        "value": 420,
+        "unit": "/ 500",
+        "label": "420/500",
+        "description": "Hertz Arena Mega Shelter: 420/500 capacity",
+        "capacity": 500,
+        "occupancy": 420,
+        "county": "Lee",
+        "countyFips": "12071",
+        "city": "Estero",
+        "petFriendly": true,
+        "adaCompliant": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-82.5515, 27.3364] },
+      "properties": {
+        "id": "fema-mock-002",
+        "source": "fema",
+        "name": "Sarasota Fairgrounds Shelter",
+        "severity": "moderate",
+        "value": 180,
+        "unit": "/ 350",
+        "label": "180/350",
+        "description": "Sarasota Fairgrounds Shelter: 180/350 capacity",
+        "capacity": 350,
+        "occupancy": 180,
+        "county": "Sarasota",
+        "countyFips": "12115",
+        "city": "Sarasota",
+        "petFriendly": false,
+        "adaCompliant": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-82.4572, 27.9506] },
+      "properties": {
+        "id": "fema-mock-003",
+        "source": "fema",
+        "name": "Tampa Convention Center",
+        "severity": "low",
+        "value": 120,
+        "unit": "/ 800",
+        "label": "120/800",
+        "description": "Tampa Convention Center: 120/800 capacity",
+        "capacity": 800,
+        "occupancy": 120,
+        "county": "Hillsborough",
+        "countyFips": "12057",
+        "city": "Tampa",
+        "petFriendly": true,
+        "adaCompliant": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-81.7948, 26.1684] },
+      "properties": {
+        "id": "fema-mock-004",
+        "source": "fema",
+        "name": "Naples High School",
+        "severity": "critical",
+        "value": 290,
+        "unit": "/ 300",
+        "label": "290/300",
+        "description": "Naples High School: 290/300 capacity",
+        "capacity": 300,
+        "occupancy": 290,
+        "county": "Collier",
+        "countyFips": "12021",
+        "city": "Naples",
+        "petFriendly": false,
+        "adaCompliant": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-82.6368, 27.7676] },
+      "properties": {
+        "id": "fema-mock-005",
+        "source": "fema",
+        "name": "Pinellas County Fairgrounds",
+        "severity": "moderate",
+        "value": 200,
+        "unit": "/ 400",
+        "label": "200/400",
+        "description": "Pinellas County Fairgrounds: 200/400 capacity",
+        "capacity": 400,
+        "occupancy": 200,
+        "county": "Pinellas",
+        "countyFips": "12103",
+        "city": "Largo",
+        "petFriendly": true,
+        "adaCompliant": true
+      }
+    }
+  ]
+}

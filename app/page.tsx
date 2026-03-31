@@ -1,19 +1,41 @@
-import { Button } from "@/components/ui/button"
+"use client"
+
+import dynamic from "next/dynamic"
+
+const MapContainer = dynamic(
+  () => import("@/components/map/map-container"),
+  { ssr: false }
+)
+const DataLoader = dynamic(
+  () => import("@/components/map/data-loader"),
+  { ssr: false }
+)
+const LayerToggle = dynamic(
+  () => import("@/components/panels/layer-toggle"),
+  { ssr: false }
+)
+const CountyBrief = dynamic(
+  () => import("@/components/panels/county-brief"),
+  { ssr: false }
+)
+const QueryBar = dynamic(
+  () => import("@/components/panels/query-bar"),
+  { ssr: false }
+)
+const ChangeFeed = dynamic(
+  () => import("@/components/panels/change-feed"),
+  { ssr: false }
+)
 
 export default function Page() {
   return (
-    <div className="flex min-h-svh p-6">
-      <div className="flex max-w-md min-w-0 flex-col gap-4 text-sm leading-loose">
-        <div>
-          <h1 className="font-medium">Project ready!</h1>
-          <p>You may now add components and start building.</p>
-          <p>We&apos;ve already added the button component for you.</p>
-          <Button className="mt-2">Button</Button>
-        </div>
-        <div className="font-mono text-xs text-muted-foreground">
-          (Press <kbd>d</kbd> to toggle dark mode)
-        </div>
-      </div>
+    <div className="relative h-svh w-full overflow-hidden bg-[#0B1426]">
+      <MapContainer />
+      <DataLoader />
+      <LayerToggle />
+      <CountyBrief />
+      <QueryBar />
+      <ChangeFeed />
     </div>
   )
 }

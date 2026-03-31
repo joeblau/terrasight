@@ -4,7 +4,7 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev --turbopack --port 2999 --experimental-https",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
@@ -12,6 +12,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.80.0",
+    "@arcgis/core": "^5.0.15",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^1.7.0",
@@ -21,8 +23,10 @@
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "shadcn": "^4.1.1",
+    "swr": "^2.4.1",
     "tailwind-merge": "^3.5.0",
-    "tw-animate-css": "^1.4.0"
+    "tw-animate-css": "^1.4.0",
+    "zustand": "^5.0.12"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

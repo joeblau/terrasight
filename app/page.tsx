@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import dynamic from "next/dynamic"
 import { ArrowLeft, PanelLeft, PanelRight } from "lucide-react"
 import { useMapStore } from "@/store/map-store"
@@ -35,6 +35,16 @@ export default function Page() {
   const [rightOpen, setRightOpen] = useState(true)
   const selectedCounty = useMapStore((s) => s.selectedCounty)
   const selectCounty = useMapStore((s) => s.selectCounty)
+
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return
+      if (e.key === "l" || e.key === "L") setLeftOpen((v) => !v)
+      if (e.key === "r" || e.key === "R") setRightOpen((v) => !v)
+    }
+    window.addEventListener("keydown", handleKey)
+    return () => window.removeEventListener("keydown", handleKey)
+  }, [])
 
   return (
     <div className="relative h-svh w-full overflow-hidden bg-background">

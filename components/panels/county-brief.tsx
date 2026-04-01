@@ -201,7 +201,7 @@ function RegionalOverview() {
           14 counties ranked by activity
         </p>
       </div>
-      <div className="max-h-[60vh] space-y-1 overflow-y-auto">
+      <div className="space-y-1">
         {counties.map((county) => (
           <button
             key={county.fips}
